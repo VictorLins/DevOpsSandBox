@@ -13,9 +13,9 @@ pipeline {
             steps {
                 script {
                     if (checkOs() == 'Windows') {
-                        bat 'C:\Users\victo\PycharmProjects\pythonProject\venv\Scripts\python.exe 1.py'
+                        'C:\Users\victo\PycharmProjects\pythonProject\venv\Scripts\python.exe 1.py'
                     } else {
-                        sh 'C:\Users\victo\PycharmProjects\pythonProject\venv\Scripts\python.exe 1.py'
+                        'C:\Users\victo\PycharmProjects\pythonProject\venv\Scripts\python.exe 1.py'
                     }
                 }
             }
