@@ -1,11 +1,39 @@
 pipeline {
     agent any
-
     stages {
-        stage('Hello') {
+        stage('checkout') {
             steps {
-                echo 'Hello World'
+                script {
+                    properties([pipelineTriggers([pollSCM('* * * * *')])])
+                }
+                git 'https://github.com/Dgotlieb/JenkinsTest.git'
             }
         }
+        stage('run python') {
+            steps {
+                script {
+                    if (checkOs() == 'Windows') {
+                        bat 'C:\Users\victo\PycharmProjects\pythonProject\venv\Scripts\python.exe 1.py'
+                    } else {
+                        sh 'C:\Users\victo\PycharmProjects\pythonProject\venv\Scripts\python.exe 1.py'
+                    }
+                }
+            }
+        }
+    }
+}
+
+def checkOs(){
+    if (isUnix()) {
+        def uname = sh script: 'uname', returnStdout: true
+        if (uname.startsWith("Darwin")) {
+            return "Macos"
+        }
+        else {
+            return "Linux"
+        }
+    }
+    else {
+        return "Windows"
     }
 }
